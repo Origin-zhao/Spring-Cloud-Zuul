@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: zuul-server
+server:
+  port: 9090
+
+# 配置中心配置
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
+
+# 路由配置,所有以/server-a/开头的请求都转发到server-a服务实例
+# zuul.routes.<自定义名称>.path= 请求路径前缀
+# zuul.routes.<自定义名称>.serviceId=服务id
+zuul:
+  routes:
+    server-a:
+      path: /server-a/**
+      serviceId: server-a
