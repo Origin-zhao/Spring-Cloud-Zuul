@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  *请求必须包含token参数,否则直接抛出异常
@@ -43,6 +44,12 @@ public class TokenFilter extends ZuulFilter {
             log.warn("token 没有找到");
             context.setSendZuulResponse(false); // 不对请求继续做路由处理
             context.setResponseStatusCode(401);
+            try {
+                //返回相应数据
+                context.getResponse().getWriter().write("token is null");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
